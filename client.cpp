@@ -7,5 +7,6 @@ int main(){
     char buffer[128];
     client->Read(buffer,sizeof(buffer));
     printf("recv message:%s\n",buffer);
+    client->Close();
     return 0;
 }

@@ -1,11 +1,12 @@
 #include "socket.hpp"
 
-bool Socket::isStartup = false;
+#ifdef _WIN32
+int Socket::count = 0;
 
-void Socket::startup()
+int Socket::startup()
 {
     WSADATA wsaData;
-    WSAStartup(MAKEWORD(2, 2), &wsaData);
+    return WSAStartup(MAKEWORD(2, 2), &wsaData);
 }
 
 Socket::Socket()
@@ -14,10 +15,11 @@ Socket::Socket()
 
 Socket::Socket(SocketMode mode, char *ipaddr, ushort port)
 {
-    if (!isStartup)
+    if (Socket::count == 0 && Socket::startup() != 0)
     {
-        startup();
+        return;
     }
+    Socket::count++;
 
     this->sock = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     this->addr.sin_family = AF_INET;
@@ -53,3 +55,14 @@ Socket Socket::Accept()
     res.sock = accept(this->sock, (SOCKADDR *)&res.addr, &len);
     return res;
 }
+
+void Socket::Close()
+{
+    closesocket(this->sock);
+    Socket::count--;
+    if(Socket::count == 0){
+        WSACleanup();
+    }
+}
+#elif __linux__
+#endif

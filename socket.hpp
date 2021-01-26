@@ -1,3 +1,4 @@
+#ifdef _WIN32
 #include "typedef.hpp"
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
@@ -10,8 +11,8 @@ enum class SocketMode
 
 class Socket
 {
-    static bool isStartup;
-    static void startup();
+    static int count;
+    static int startup();
 
     SOCKET sock;
     sockaddr_in addr;
@@ -22,4 +23,7 @@ public:
     Socket Accept();
     int Read(char *buffer, int size);
     int Write(char *buffer, int size);
+    void Close();
 };
+#elif __linux__
+#endif
