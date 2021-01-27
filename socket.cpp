@@ -13,7 +13,7 @@ Socket::Socket()
 {
 }
 
-Socket::Socket(SocketMode mode, char *ipaddr, ushort port)
+Socket::Socket(SocketMode mode, char *ipaddr, ushort port,TransferProtocol protocol = TransferProtocol::TCP)
 {
     if (Socket::count == 0 && Socket::startup() != 0)
     {
@@ -21,7 +21,7 @@ Socket::Socket(SocketMode mode, char *ipaddr, ushort port)
     }
     Socket::count++;
 
-    this->sock = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    this->sock = ::socket(AF_INET, SOCK_STREAM, (int)protocol);
     this->addr.sin_family = AF_INET;
     this->addr.sin_addr.s_addr = inet_addr(ipaddr);
     this->addr.sin_port = htons(port);

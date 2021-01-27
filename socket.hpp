@@ -6,6 +6,11 @@ enum class SocketMode
     Server = 1
 };
 
+enum class TransferProtocol{
+    TCP = 6,
+    UDP = 17
+};
+
 enum class ShutdownMode{
     Read = 0,
     Write = 1,
@@ -26,7 +31,7 @@ private:
 
 public:
     Socket();
-    Socket(SocketMode mode, char *ipaddr, ushort port);
+    Socket(SocketMode mode, char *ipaddr, ushort port,TransferProtocol protocol);
     ~Socket();
     Socket Accept();
     int Connect();
