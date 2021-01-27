@@ -31,10 +31,13 @@ Socket::Socket(SocketMode mode, char *ipaddr, ushort port)
         bind(this->sock, (SOCKADDR *)&this->addr, sizeof(SOCKADDR));
         listen(this->sock, 20);
     }
-    else
+}
+
+Socket::~Socket()
+{
+    if (Socket::count == 0)
     {
-        //mode is SocketMode::Client
-        connect(this->sock, (SOCKADDR *)&this->addr, sizeof(SOCKADDR));
+        WSACleanup();
     }
 }
 
@@ -56,14 +59,20 @@ Socket Socket::Accept()
     return res;
 }
 
+int Socket::Connect()
+{
+    return connect(this->sock, (SOCKADDR *)&this->addr, sizeof(SOCKADDR));
+}
+
+int Socket::Shutdown(ShutdownMode mode)
+{
+    return shutdown(this->sock,(int)mode);
+}
+
 void Socket::Close()
 {
     closesocket(this->sock);
     Socket::count--;
-    if (Socket::count == 0)
-    {
-        WSACleanup();
-    }
 }
 #elif __linux__
 Socket::Socket()
@@ -76,7 +85,7 @@ Socket::Socket(SocketMode mode, char *ipaddr, ushort port)
     this->addr.sin_family = AF_INET;
     this->addr.sin_addr.s_addr = inet_addr(ipaddr);
     this->addr.sin_port = htons(port);
-    
+
     if (mode == SocketMode::Server)
     {
         bind(this->sock, (sockaddr *)&this->addr, sizeof(sockaddr));

@@ -3,11 +3,14 @@
 
 int main()
 {
-    Socket *client = new Socket(SocketMode::Client, "127.0.0.1", 9977);
-
     char buffer[128];
-    int len = client->Read(buffer, sizeof(buffer));
+    int len;
+    {
+        Socket *client = new Socket(SocketMode::Client, "127.0.0.1", 9977);
+        client->Connect();
+        len = client->Read(buffer, sizeof(buffer));
+        client->Close();
+    }
     printf("recv message%d:%s\n", len, buffer);
-    client->Close();
     return 0;
 }

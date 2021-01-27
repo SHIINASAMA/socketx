@@ -1,9 +1,16 @@
 #include "typedef.hpp"
+#include <stdio.h>
 
 enum class SocketMode
 {
     Client = 0,
     Server = 1
+};
+
+enum class ShutdownMode{
+    Read = 0,
+    Write = 1,
+    WriteAndRead = 2
 };
 
 #ifdef _WIN32
@@ -21,9 +28,12 @@ private:
 public:
     Socket();
     Socket(SocketMode mode, char *ipaddr, ushort port);
+    ~Socket();
     Socket Accept();
+    int Connect();
     int Read(char *buffer, int size);
     int Write(char *buffer, int size);
+    int Shutdown(ShutdownMode mode);
     void Close();
 };
 

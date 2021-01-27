@@ -1,5 +1,4 @@
 #include "socket.hpp"
-#include <stdio.h>
 
 int main(){
     Socket* socket = new Socket(SocketMode::Server,"0.0.0.0",9977);
