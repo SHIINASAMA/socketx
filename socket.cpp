@@ -66,7 +66,7 @@ int Socket::Connect()
 
 int Socket::Shutdown(ShutdownMode mode)
 {
-    return shutdown(this->sock,(int)mode);
+    return shutdown(this->sock, (int)mode);
 }
 
 void Socket::Close()
@@ -91,10 +91,6 @@ Socket::Socket(SocketMode mode, char *ipaddr, ushort port)
         bind(this->sock, (sockaddr *)&this->addr, sizeof(sockaddr));
         listen(sock, 20);
     }
-    else
-    {
-        connect(this->sock, (sockaddr *)&this->addr, sizeof(sockaddr));
-    }
 }
 
 Socket Socket::Accept()
@@ -105,6 +101,11 @@ Socket Socket::Accept()
     return res;
 }
 
+int Socket::Connect()
+{
+    return connect(this->sock, (sockaddr *)&this->addr, sizeof(sockaddr));
+}
+
 int Socket::Read(char *buffer, int size)
 {
     return read(this->sock, buffer, size);
@@ -113,6 +114,11 @@ int Socket::Read(char *buffer, int size)
 int Socket::Write(char *buffer, int size)
 {
     return write(this->sock, buffer, size);
+}
+
+int Socket::Shutdown(ShutdownMode mode)
+{
+    return shutdown(this->sock,(int)mode);
 }
 
 void Socket::Close()

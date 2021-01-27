@@ -52,8 +52,10 @@ public:
     Socket();
     Socket(SocketMode mode, char *ipaddr, ushort port);
     Socket Accept();
+    int Connect();
     int Read(char *buffer, int size);
     int Write(char *buffer, int size);
+    int Shutdown(ShutdownMode mode);
     void Close();
 };
 #endif
