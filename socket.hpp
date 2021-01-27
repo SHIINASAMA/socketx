@@ -1,5 +1,4 @@
 #include "typedef.hpp"
-#include <stdio.h>
 
 enum class SocketMode
 {
