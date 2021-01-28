@@ -1,17 +1,14 @@
-
-#include "..\Socketx.hpp"
+#include "../Socket.hpp"
 #include <stdio.h>
 
 int main()
 {
-    Socketx *client = new Socketx(SocketMode::Client, "127.0.0.1", 9977);
+    auto client = new Socket(SocketMode::Client,"127.0.0.1",9977);
     client->Connect();
-
     char buffer[128];
-    int len = client->Read(buffer, sizeof(buffer));
+    int len = client->Read(buffer,sizeof(buffer));
     client->Close();
     delete client;
-
-    printf("recv message%d:%s\n", len, buffer);
+    printf("size of revced bytes:%d\nmessage:%s\n",len,buffer);
     return 0;
 }
