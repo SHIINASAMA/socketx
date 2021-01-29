@@ -4,18 +4,21 @@
 
 |文件|说明|
 |-|-|
-|socket.hpp|socket类声明|
-|socket.cpp|socket类定义|
-|typedef.hpp|杂项声明|
-|client.cpp|客户端demo|
-|server.cpp|服务端demo|
+|Socket.hpp、Socket.cpp|Socket类（使用TCP协议）|
+|ServerSocket.hpp、ServerSocket.cpp|ServerSocket类（服务端类，使用TCP协议）|
+|DatagramSocket.hpp、DatagramSocket.cpp|DatagramSocket类（使用UDP协议）|
+|ServerDatagramSocket.hpp、ServerDatagramSocket.cpp|ServerDatagramSocket类（服务端类，使用UDP协议）|
+|TcpDemo/Server.cpp|TCP服务端DEMO|
+|TcpDemo/Client.cpp|TCP客户端DEMO|
+|UdpDemo/Server.cpp|UDP服务端DEMO|
+|UdpDemo/Client.cpp|UDP客户端DEMO|
 
 ### 测试环境
 
 |操作系统|编译器|
 |-|-|
 |Ubuntu 20.04|g++ 9.3.0|
-|Windows|MSVC 14.0|
+|Windows 10|MSVC 14.0|
 
 ### Q&A  
 Q1：如何使用？  
