@@ -19,7 +19,6 @@ class Socket
 private:
     static int count;
     static int startup();
-    
 
 protected:
     SOCKET sock;

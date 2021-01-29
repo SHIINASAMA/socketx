@@ -11,6 +11,11 @@ int Socket::startup()
 
 Socket::Socket()
 {
+    if (Socket::count == 0 && Socket::startup() != 0)
+    {
+        return;
+    }
+    Socket::count++;
 }
 
 Socket::Socket(SocketMode mode, char *ipaddr, unsigned short port)
