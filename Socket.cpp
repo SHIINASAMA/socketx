@@ -39,7 +39,7 @@ Socket::Socket(SocketMode mode, char *ipaddr, unsigned short port)
 
 int Socket::Listen(int backlog)
 {
-    return listen(this->sock,backlog);
+    return listen(this->sock, backlog);
 }
 
 Socket::~Socket()
@@ -100,7 +100,6 @@ Socket::Socket(SocketMode mode, char *ipaddr, ushort port)
     if (mode == SocketMode::Server)
     {
         bind(this->sock, (sockaddr *)&this->sin, sizeof(sockaddr));
-        listen(sock, 20);
     }
 }
 
@@ -110,6 +109,11 @@ Socket Socket::Accept()
     socklen_t len = sizeof(sockaddr);
     res.sock = accept(this->sock, (sockaddr *)&res.sin, &len);
     return res;
+}
+
+int Socket::Listen(int backlog)
+{
+    return listen(this->sock, backlog);
 }
 
 int Socket::Connect()
@@ -129,11 +133,11 @@ int Socket::Write(char *buffer, int size)
 
 int Socket::Shutdown(ShutdownMode mode)
 {
-    return shutdown(this->sock,(int)mode);
+    return shutdown(this->sock, (int)mode);
 }
 
-void Socket::Close()
+int Socket::Close()
 {
-    close(this->sock);
+    return close(this->sock);
 }
 #endif

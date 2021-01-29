@@ -5,7 +5,11 @@ DatagramSocket::DatagramSocket(SocketMode mode, char *ipaddr, unsigned short por
 {
     this->sock = ::socket(AF_INET, SOCK_DGRAM, 0);
     this->sin.sin_family = AF_INET;
+#ifdef _WIN32
     this->sin.sin_addr.S_un.S_addr = inet_addr(ipaddr);
+#elif __linux__
+    this->sin.sin_addr.s_addr = inet_addr(ipaddr);
+#endif
     this->sin.sin_port = htons(port);
     if (mode == SocketMode::Server)
     {
@@ -20,11 +24,15 @@ int DatagramSocket::Write(char *buffer, int size)
 
 int DatagramSocket::Read(char *buffer, int size)
 {
+#ifdef _WIN32
     int len = sizeof(sockaddr);
+#elif __linux__
+    socklen_t len = sizeof(sockaddr);
+#endif
     return recvfrom(this->sock, buffer, size, 0, (sockaddr *)&this->sin, &len);
 }
 
 int DatagramSocket::Close()
 {
-    return closesocket(this->sock);
+    return Socket::Close();
 }

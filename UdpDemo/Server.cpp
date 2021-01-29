@@ -16,7 +16,6 @@ int main()
             printf("size of sended byte:%d\n",len);
             break;
         }
-        Sleep(1000);
     }
     server->Close();
     delete server;
